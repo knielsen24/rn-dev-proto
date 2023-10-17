@@ -55,12 +55,12 @@ V2
     * Image Overlay
 
 ## Check-List
-* [x] Select image search API
+* [x] Research and select image search API
 * [x] Test API with Postman
-* [] Create Repo
-* [] Research and select 3rd part dictionary file
+* [x] Create Repo
 * [x] Create App using Expo
 * [x] Create README
+* [] Research and select 3rd part dictionary file
 * [] Search Bar (text input)
 * [] Search Button
 * [] API GET request logic
