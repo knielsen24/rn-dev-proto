@@ -12,10 +12,10 @@ import ToTopButton from "../../components/ToTopButton";
 import SearchInput from "./SearchInput";
 
 export default function Home({ navigation }) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
     const [data, setData] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
     const listRef = useRef(null);
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
     const CONTENT_OFFSET_THRESHOLD = 400;
