@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { COLORS } from "../lib/theme";
 import { createURL } from "../lib/api";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import Button from "../components/Button";
 
@@ -14,7 +15,17 @@ export default function Home() {
 
     const handleSubmit = async () => {
         const URL = createURL(searchTerm);
-        console.log(URL);
+        try {
+            setIsLoading(true);
+            const response = await fetch(URL);
+            const data = await response.json();
+            console.log(data); // Check the data returned from the API
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setErrorMessage("An error occurred while making your search.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
