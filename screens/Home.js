@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { COLORS } from "../lib/theme";
+import { createURL } from "../lib/api";
 import { MaterialIcons } from "@expo/vector-icons";
-
 import Button from "../components/Button";
 
 export default function Home() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
 
-    const handleChange = (text) => {
-        setSearchTerm(text);
-    };
-    
-    const handleSubmit = () => {
-        console.log("Button Pressed");
+    const handleChange = (value) => setSearchTerm(value);
+
+    const handleSubmit = async () => {
+        const URL = createURL(searchTerm);
+        console.log(URL);
     };
 
     return (
