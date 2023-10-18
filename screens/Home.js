@@ -30,6 +30,10 @@ export default function Home() {
         }
     };
 
+    const handlePress = () => {
+        console.log("Pressed!");
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
@@ -51,15 +55,22 @@ export default function Home() {
                     <Button handlePress={handleSubmit} />
                 </View>
             </View>
-                <FlatList
-                    alwaysBounceVertical={false}
-                    data={data}
-                    renderItem={({ item }) => (
-                        <ImageCard imageURL={item.webformatURL} />
-                    )}
-                />
-            <View style={styles.resultsContainer}>
-            </View>
+            <FlatList
+                alwaysBounceVertical={false}
+                data={data}
+                initialNumToRender={5}
+                renderItem={({ item }) => (
+                    <ImageCard
+                        imageURL={item.webformatURL}
+                        views={item.views}
+                        likes={item.likes}
+                        downloads={item.downloads}
+                        handlePress={handlePress}
+                    />
+                )}
+                keyExtractor={(item) => item.id}
+            />
+            <View style={styles.resultsContainer}></View>
         </View>
     );
 }

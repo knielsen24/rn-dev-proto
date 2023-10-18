@@ -1,12 +1,18 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { COLORS } from "../lib/theme";
 
-export default function ImageCard({ imageURL }) {
+/**
+ * TODO: add icons for views, likes, and downloads
+ */
+
+export default function ImageCard({ imageURL, views, likes, downloads, handlePress }) {
     return (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={handlePress}>
             <Image source={{ uri: imageURL }} style={styles.image} />
             <View style={styles.detailsContainer}>
-                <Text style={styles.title}>Test</Text>
+                <Text style={styles.title}>{views}</Text>
+                <Text style={styles.title}>{likes}</Text>
+                <Text style={styles.title}>{downloads}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -25,10 +31,13 @@ const styles = StyleSheet.create({
     },
     detailsContainer: {
         padding: 16,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
     title: {
-        fontSize: 18,
-        fontWeight: "bold",
-        color: COLORS.violet700,
+        fontSize: 14,
+        // fontWeight: "bold",
+        color: COLORS.gray600,
     },
 });

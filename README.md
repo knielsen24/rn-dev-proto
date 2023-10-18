@@ -67,14 +67,14 @@ V2
 * [x] Create Repo
 * [x] Create App using Expo
 * [x] Create README
-* [] Configure React Navigation
-* [] Research and select 3rd part dictionary file
-* [] Search Bar (text input)
-* [] Search Button
-* [] API GET request logic
+* [x] Configure React Navigation
+* [x] Search Bar (text input)
+* [x] Search Button
+* [x] API GET request logic
+* [x] Results Area
+* [x] Responsive Gallery
 * [] Error Handling
-* [] Results Area
-* [] Responsive Gallery
+* [] Research and select 3rd part dictionary file
 * [] Responsive Overlay
 * [] Spelling Checker
 * [] Decisions & Assumptions
