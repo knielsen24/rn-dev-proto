@@ -10,9 +10,9 @@ export default function ImageCard({ imageURL, views, likes, downloads, handlePre
         <TouchableOpacity style={styles.card} onPress={handlePress}>
             <Image source={{ uri: imageURL }} style={styles.image} />
             <View style={styles.detailsContainer}>
-                <Text style={styles.title}>{views}</Text>
-                <Text style={styles.title}>{likes}</Text>
-                <Text style={styles.title}>{downloads}</Text>
+                {/* <Text style={styles.title}>Views: {views}</Text> */}
+                <Text style={styles.title}>Likes {likes}</Text>
+                <Text style={styles.title}>Downloads: {downloads}</Text>
             </View>
         </TouchableOpacity>
     );

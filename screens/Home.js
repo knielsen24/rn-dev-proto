@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TextInput, FlatList } from "react-native";
-import { COLORS } from "../lib/theme";
-import { createURL } from "../lib/api";
-
+import { StyleSheet, View, TextInput, FlatList } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { COLORS } from "../lib/theme";
+import { createURL } from "../lib/createURL";
+
 import Button from "../components/Button";
 import ImageCard from "../components/ImageCard";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function Home() {
     const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +34,11 @@ export default function Home() {
 
     const handlePress = () => {
         console.log("Pressed!");
-    }
+    };
+
+/**
+ * TODO: If errorMessage, flatlist is still rendering (with no data)
+ */
 
     return (
         <View style={styles.container}>
@@ -55,22 +61,26 @@ export default function Home() {
                     <Button handlePress={handleSubmit} />
                 </View>
             </View>
-            <FlatList
-                alwaysBounceVertical={false}
-                data={data}
-                initialNumToRender={5}
-                renderItem={({ item }) => (
-                    <ImageCard
-                        imageURL={item.webformatURL}
-                        views={item.views}
-                        likes={item.likes}
-                        downloads={item.downloads}
-                        handlePress={handlePress}
-                    />
-                )}
-                keyExtractor={(item) => item.id}
-            />
-            <View style={styles.resultsContainer}></View>
+            {errorMessage ? <ErrorMessage error={errorMessage} /> : null}
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <FlatList
+                    alwaysBounceVertical={false}
+                    data={data}
+                    initialNumToRender={5}
+                    renderItem={({ item }) => (
+                        <ImageCard
+                            imageURL={item.webformatURL}
+                            views={item.views}
+                            likes={item.likes}
+                            downloads={item.downloads}
+                            handlePress={handlePress}
+                        />
+                    )}
+                    keyExtractor={(item) => item.id}
+                />
+            )}
         </View>
     );
 }
@@ -79,8 +89,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.gray200,
-        // alignItems: "center",
-        // justifyContent: "center",
     },
     searchContainer: {
         width: "100%",
@@ -116,8 +124,5 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginLeft: 8,
-    },
-    resultsContainer: {
-        flex: 1,
     },
 });
