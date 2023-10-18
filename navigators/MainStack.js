@@ -10,9 +10,9 @@ export default function MainStack() {
         <Stack.Navigator initialRouteName="Home"
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: COLORS.violet400,
+                    backgroundColor: COLORS.violet500,
                 },
-                headerTintColor: COLORS.gray050,
+                headerTintColor: COLORS.gray100,
                 headerTitleStyle: {
                     fontWeight: "bold",
                 },
