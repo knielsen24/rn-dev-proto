@@ -28,7 +28,10 @@ export default function MainStack() {
             <Stack.Screen
                 name="Overlay"
                 component={Overlay}
-                options={{ title: "View Photo" }}
+                options={{
+                    title: "View Photo",
+                    animation: "fade",
+                }}
             />
         </Stack.Navigator>
     );

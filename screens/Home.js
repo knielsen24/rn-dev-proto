@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { StyleSheet, View, TextInput, FlatList, Keyboard } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../lib/theme";
@@ -8,12 +8,16 @@ import Button from "../components/Button";
 import ImageCard from "../components/ImageCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage";
+import ToTopButton from "../components/ToTopButton";
 
 export default function Home({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [data, setData] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const listRef = useRef(null);
+    const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
+    const CONTENT_OFFSET_THRESHOLD = 400;
 
     const handleChange = (value) => setSearchTerm(value);
 
@@ -32,10 +36,6 @@ export default function Home({ navigation }) {
             Keyboard.dismiss();
         }
     };
-
-    // const handlePress = () => {
-    //     console.log("Pressed!");
-    // };
 
     return (
         <View style={styles.container}>
@@ -62,21 +62,40 @@ export default function Home({ navigation }) {
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
-                <FlatList
-                    alwaysBounceVertical={false}
-                    data={data}
-                    initialNumToRender={5}
-                    renderItem={({ item }) => (
-                        <ImageCard
-                            imageURL={item.webformatURL}
-                            views={item.views}
-                            likes={item.likes}
-                            downloads={item.downloads}
-                            navigation={navigation}
+                <>
+                    <FlatList
+                        alwaysBounceVertical={false}
+                        data={data}
+                        initialNumToRender={5}
+                        renderItem={({ item }) => (
+                            <ImageCard
+                                imageURL={item.webformatURL}
+                                views={item.views}
+                                likes={item.likes}
+                                downloads={item.downloads}
+                                navigation={navigation}
+                            />
+                        )}
+                        keyExtractor={(item) => item.id}
+                        ref={listRef}
+                        onScroll={(event) => {
+                            setContentVerticalOffset(
+                                event.nativeEvent.contentOffset.y
+                            );
+                        }}
+                    />
+                    {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD &&
+                    data ? (
+                        <ToTopButton
+                            handlePress={() =>
+                                listRef.current.scrollToOffset({
+                                    offset: 0,
+                                    animated: true,
+                                })
+                            }
                         />
-                    )}
-                    keyExtractor={(item) => item.id}
-                />
+                    ) : null}
+                </>
             )}
         </View>
     );

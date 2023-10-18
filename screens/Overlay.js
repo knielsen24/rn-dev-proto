@@ -1,30 +1,8 @@
-// import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { COLORS } from "../lib/theme";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-// export default function Overlay({ route }) {
-//     const URL = route.params.imageURL;
-//     const windowHeight = Dimensions.get('window').height; // Get the height of the window
-
-//     return (
-//         <View style={styles.container}>
-//             <Image source={{ uri: URL }} style={[styles.image, { height: windowHeight * 0.4 }]} />
-//         </View>
-//     );
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: "center",
-//         alignItems: "center",
-//     },
-//     image: {
-//         width: "100%",
-//     },
-// });
-
-import { Text, View, Image, StyleSheet } from "react-native";
-
-export default function Overlay({ route }) {
+export default function Overlay({ navigation, route }) {
     const URL = route.params.imageURL;
 
     return (
@@ -34,6 +12,16 @@ export default function Overlay({ route }) {
                 style={styles.image}
                 resizeMode="contain"
             />
+            <TouchableOpacity
+                style={styles.closeButton}
+                onPress={navigation.goBack}
+            >
+                <MaterialCommunityIcons
+                    name="close-circle-outline"
+                    size={40}
+                    color={COLORS.gray500}
+                />
+            </TouchableOpacity>
         </View>
     );
 }
@@ -47,5 +35,10 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         aspectRatio: 1,
+    },
+    closeButton: {
+        position: 'absolute',
+        bottom: 30,
+        alignSelf: 'center',
     },
 });
