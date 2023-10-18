@@ -11,7 +11,6 @@ export default function Button({ handlePress }) {
                 size={28}
                 color={COLORS.gray500}
             />
-            {/* <Text style={styles.text}>Search</Text> */}
         </TouchableOpacity>
     );
 }

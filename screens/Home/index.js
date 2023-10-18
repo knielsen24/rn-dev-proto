@@ -1,14 +1,14 @@
 import { useState, useRef } from "react";
 import { StyleSheet, View, TextInput, FlatList, Keyboard } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { COLORS } from "../lib/theme";
-import { createURL } from "../lib/createURL";
+import { COLORS } from "../../lib/theme";
+import { createURL } from "../../lib/createURL";
 
-import Button from "../components/Button";
-import ImageCard from "../components/ImageCard";
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorMessage from "../components/ErrorMessage";
-import ToTopButton from "../components/ToTopButton";
+import Button from "../../components/Button";
+import ImageCard from "./ImageCard";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorMessage from "../../components/ErrorMessage";
+import ToTopButton from "../../components/ToTopButton";
 
 export default function Home({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);

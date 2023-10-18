@@ -29,7 +29,7 @@ export default function MainStack() {
                 name="Overlay"
                 component={Overlay}
                 options={{
-                    title: "View Photo",
+                    title: "Image",
                     animation: "fade",
                 }}
             />

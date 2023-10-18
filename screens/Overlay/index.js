@@ -1,5 +1,5 @@
 import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { COLORS } from "../lib/theme";
+import { COLORS } from "../../lib/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Overlay({ navigation, route }) {

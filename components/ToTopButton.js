@@ -19,11 +19,9 @@ const styles = StyleSheet.create({
     button: {
         position: "absolute",
         bottom: 30,
-        right: 30,
+        right: 20,
         backgroundColor: "rgba(196, 181, 253, 0.8)",
         // backgroundColor: COLORS.violet300,
         borderRadius: 50,
-        padding: 0,
-        margin: 0,
     },
 });
