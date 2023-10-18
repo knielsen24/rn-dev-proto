@@ -73,7 +73,7 @@ V2
 * [x] API GET request logic
 * [x] Results Area
 * [x] Responsive Gallery
-* [] Error Handling
+* [x] Error Handling
 * [] Research and select 3rd part dictionary file
 * [] Responsive Overlay
 * [] Spelling Checker

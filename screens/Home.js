@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, TextInput, FlatList } from "react-native";
+import { StyleSheet, View, TextInput, FlatList, Keyboard } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../lib/theme";
 import { createURL } from "../lib/createURL";
@@ -9,7 +9,7 @@ import ImageCard from "../components/ImageCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage";
 
-export default function Home() {
+export default function Home({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [data, setData] = useState(null);
@@ -29,16 +29,13 @@ export default function Home() {
             setErrorMessage("An error occurred while making your search.");
         } finally {
             setIsLoading(false);
+            Keyboard.dismiss();
         }
     };
 
-    const handlePress = () => {
-        console.log("Pressed!");
-    };
-
-/**
- * TODO: If errorMessage, flatlist is still rendering (with no data)
- */
+    // const handlePress = () => {
+    //     console.log("Pressed!");
+    // };
 
     return (
         <View style={styles.container}>
@@ -75,7 +72,7 @@ export default function Home() {
                             views={item.views}
                             likes={item.likes}
                             downloads={item.downloads}
-                            handlePress={handlePress}
+                            navigation={navigation}
                         />
                     )}
                     keyExtractor={(item) => item.id}

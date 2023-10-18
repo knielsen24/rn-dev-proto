@@ -1,18 +1,44 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../lib/theme";
 
-/**
- * TODO: add icons for views, likes, and downloads
- */
+export default function ImageCard({
+    imageURL,
+    views,
+    likes,
+    downloads,
+    navigation,
+}) {
+    const handlePress = () => {
+        navigation.navigate("Overlay", {
+            imageURL,
+        });
+    };
 
-export default function ImageCard({ imageURL, views, likes, downloads, handlePress }) {
     return (
-        <TouchableOpacity style={styles.card} onPress={handlePress}>
+        <TouchableOpacity
+            style={styles.card}
+            onPress={handlePress}
+        >
             <Image source={{ uri: imageURL }} style={styles.image} />
             <View style={styles.detailsContainer}>
-                {/* <Text style={styles.title}>Views: {views}</Text> */}
-                <Text style={styles.title}>Likes {likes}</Text>
-                <Text style={styles.title}>Downloads: {downloads}</Text>
+                {/* <Text style={styles.captionText}>Views: {views}</Text> */}
+                <View style={styles.captionContainer}>
+                    <MaterialIcons
+                        name="thumb-up-off-alt"
+                        size={24}
+                        color={COLORS.gray500}
+                    />
+                    <Text style={styles.captionText}> {likes}</Text>
+                </View>
+                <View style={styles.captionContainer}>
+                    <MaterialIcons
+                        name="arrow-circle-down"
+                        size={24}
+                        color={COLORS.gray500}
+                    />
+                    <Text style={styles.captionText}>{downloads}</Text>
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -35,9 +61,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
     },
-    title: {
-        fontSize: 14,
-        // fontWeight: "bold",
+    captionContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    captionText: {
+        fontSize: 16,
         color: COLORS.gray600,
+        marginLeft: 5,
     },
 });
