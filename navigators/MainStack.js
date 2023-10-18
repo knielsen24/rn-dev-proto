@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { COLORS } from "../lib/theme";
 
 import Home from "../screens/Home";
 
@@ -6,7 +7,17 @@ const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
     return (
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Home"
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: COLORS.violet400,
+                },
+                headerTintColor: COLORS.gray050,
+                headerTitleStyle: {
+                    fontWeight: "bold",
+                },
+            }}
+        >
             <Stack.Screen
                 name="Home"
                 component={Home}
