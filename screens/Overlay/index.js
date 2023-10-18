@@ -1,9 +1,12 @@
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { COLORS } from "../../lib/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Image, StyleSheet } from "react-native";
+import CloseButton from "../../components/CloseButton";
 
 export default function Overlay({ navigation, route }) {
     const URL = route.params.imageURL;
+
+    const handlePress = () => {
+        navigation.goBack();
+    };
 
     return (
         <View style={styles.container}>
@@ -12,16 +15,7 @@ export default function Overlay({ navigation, route }) {
                 style={styles.image}
                 resizeMode="contain"
             />
-            <TouchableOpacity
-                style={styles.closeButton}
-                onPress={navigation.goBack}
-            >
-                <MaterialCommunityIcons
-                    name="close-circle-outline"
-                    size={40}
-                    color={COLORS.gray500}
-                />
-            </TouchableOpacity>
+            <CloseButton handlePress={handlePress} />
         </View>
     );
 }
@@ -35,10 +29,5 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         aspectRatio: 1,
-    },
-    closeButton: {
-        position: 'absolute',
-        bottom: 30,
-        alignSelf: 'center',
     },
 });
