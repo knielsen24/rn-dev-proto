@@ -2,6 +2,7 @@
 
 Designed by Kevin Nielsen
 
+[GitHub Repo Link](https://github.com/knielsen24/rn-dev-proto "Go to repo Link")
 
 ## Table of Contents
 - [Installation](#installation)
@@ -11,7 +12,10 @@ Designed by Kevin Nielsen
 
 ## Installation
 
-Describe how to install the project and its dependencies.
+Clone repo
+
+    cd rn-dev-proto
+    yarn install
 
 ## Design Decisions & Assumptions
 
@@ -30,6 +34,9 @@ Image Search API: Pixabay
 * Out of the 3 API's that were listed in the prompt, Pixabay had the simiplist documentation and was extremely easy to understand.
 Additionally, it only required me to register an account to gain access for an API key.
 Within a few minutes I was able to get test a get request with a search parameter in Postman and get a response back.
+
+Screen Navigation: React Navigation
+* For screen navigation, I decided to use React Navigation. I have used this library for the app I created with Xalt, and it is a very powerful tool.  There is a lot of community support and the documentation is easy to navigate (no pun intended!).
 
 V1 Screen Layout + Modal (Image Overlay):
 * Home screen with search bar, search button, search results
@@ -60,6 +67,7 @@ V2
 * [x] Create Repo
 * [x] Create App using Expo
 * [x] Create README
+* [] Configure React Navigation
 * [] Research and select 3rd part dictionary file
 * [] Search Bar (text input)
 * [] Search Button
