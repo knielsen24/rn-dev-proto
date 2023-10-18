@@ -1,6 +1,6 @@
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../lib/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Button({ handlePress }) {
     return (

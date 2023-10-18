@@ -21,7 +21,7 @@ export default function MainStack() {
             <Stack.Screen
                 name="Home"
                 component={Home}
-                options={{ title: "ARNDP Image Search Engine" }}
+                options={{ title: "Pixabay Lite" }}
             />
         </Stack.Navigator>
     );
