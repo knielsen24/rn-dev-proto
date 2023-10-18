@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, FlatList } from "react-native";
 import { COLORS } from "../lib/theme";
 import { createURL } from "../lib/api";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import Button from "../components/Button";
+import ImageCard from "../components/ImageCard";
 
 export default function Home() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [data, setData] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
 
     const handleChange = (value) => setSearchTerm(value);
@@ -18,8 +20,8 @@ export default function Home() {
         try {
             setIsLoading(true);
             const response = await fetch(URL);
-            const data = await response.json();
-            console.log(data); // Check the data returned from the API
+            const results = await response.json();
+            setData(results.hits);
         } catch (error) {
             console.error("Error fetching data:", error);
             setErrorMessage("An error occurred while making your search.");
@@ -49,6 +51,15 @@ export default function Home() {
                     <Button handlePress={handleSubmit} />
                 </View>
             </View>
+                <FlatList
+                    alwaysBounceVertical={false}
+                    data={data}
+                    renderItem={({ item }) => (
+                        <ImageCard imageURL={item.webformatURL} />
+                    )}
+                />
+            <View style={styles.resultsContainer}>
+            </View>
         </View>
     );
 }
@@ -56,10 +67,9 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column",
         backgroundColor: COLORS.gray200,
-        alignItems: "center",
-        justifyContent: "center",
+        // alignItems: "center",
+        // justifyContent: "center",
     },
     searchContainer: {
         width: "100%",
@@ -95,5 +105,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginLeft: 8,
+    },
+    resultsContainer: {
+        flex: 1,
     },
 });
