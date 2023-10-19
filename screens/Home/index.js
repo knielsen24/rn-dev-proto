@@ -66,11 +66,13 @@ export default function Home({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <SearchInput
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                searchInput={searchInput}
-            />
+            <View style={styles.outerContainer}>
+                <SearchInput
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    searchInput={searchInput}
+                />
+            </View>
             {errorMessage ? <ErrorMessage error={errorMessage} /> : null}
             {isLoading ? (
                 <LoadingSpinner />

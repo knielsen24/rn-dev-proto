@@ -96,7 +96,7 @@ Remove non-letter characters
 * This was a simple regex expression that removed any non-letter characters from the string. I used the `replace()` method to replace any non-letter characters with an empty string.
 
 Mistyped vowels
-* My first attempt I was able to get the vowel replacer function to work under certain circumstances and would only change the first vowel if that was mistyped.  Far from ideal.
+* My first attempt I was able to get the vowel replacer function to work under certain circumstances and would only change the first vowel if that was mistyped. It's a start but far from ideal since it does not work for all test cases.
 * Logic
     * Iterate through the string and check if the char is vowel
     * If it is a vowel, change the vowel, and check for a match

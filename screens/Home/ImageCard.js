@@ -22,7 +22,6 @@ export default function ImageCard({
         >
             <Image source={{ uri: imageURL }} style={styles.image} />
             <View style={styles.detailsContainer}>
-                {/* <Text style={styles.captionText}>Views: {views}</Text> */}
                 <View style={styles.captionContainer}>
                     <MaterialIcons
                         name="thumb-up-off-alt"
