@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList, Keyboard } from "react-native";
 
 import { COLORS } from "../../lib/theme";
 import { createURL } from "../../lib/createURL";
-import { spellChecker } from "../../lib/spellChecker";
+import { spellChecker, removeNonLetters } from "../../lib/spellChecker";
 
 import ImageCard from "./ImageCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -13,7 +13,7 @@ import SearchInput from "./SearchInput";
 
 export default function Home({ navigation }) {
     const [data, setData] = useState(null);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchInput, setSearchInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
@@ -29,19 +29,20 @@ export default function Home({ navigation }) {
     };
 
     const handleChange = (value) => {
-        const correctedWord = spellChecker(value);
-        setSearchTerm(correctedWord);
+        const filterWord = removeNonLetters(value);
+        setSearchInput(filterWord);
+        // const correctedWord = spellChecker(filterWord);
+        // setSearchInput(correctedWord);
     };
 
     const handleSubmit = async () => {
         try {
             setIsLoading(true);
-            const URL = createURL(searchTerm);
+            const URL = createURL(searchInput);
             const response = await fetch(URL);
             const results = await response.json();
             setData(results.hits);
         } catch (error) {
-            console.error("Error fetching data:", error);
             setErrorMessage("An error occurred while making your search.");
         } finally {
             setIsLoading(false);
@@ -54,7 +55,7 @@ export default function Home({ navigation }) {
             <SearchInput
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                searchTerm={searchTerm}
+                searchInput={searchInput}
             />
             {errorMessage ? <ErrorMessage error={errorMessage} /> : null}
             {isLoading ? (

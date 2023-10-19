@@ -7,7 +7,7 @@ import Button from "../../components/Button";
 export default function SearchInput({
     handleChange,
     handleSubmit,
-    searchTerm,
+    searchInput,
 }) {
     return (
         <View style={styles.searchContainer}>
@@ -17,7 +17,7 @@ export default function SearchInput({
                     style={styles.textInput}
                     placeholder="Search for an Image"
                     onChangeText={handleChange}
-                    value={searchTerm}
+                    value={searchInput}
                     color={COLORS.gray600}
                 />
             </View>
