@@ -30,8 +30,7 @@ export default function Home({ navigation }) {
     };
 
     const handleChange = (value) => {
-        const filterWord = removeNonLetters(value);
-        setSearchInput(filterWord);
+        setSearchInput(value);
         setIsTyping(true);
     };
 
@@ -41,7 +40,8 @@ export default function Home({ navigation }) {
     useEffect(() => {
         if (isTyping) {
             const timer = setTimeout(() => {
-                const correctedWord = spellChecker(searchInput);
+                const filterWord = removeNonLetters(searchInput);
+                const correctedWord = spellChecker(filterWord);
                 setSearchInput(correctedWord);
                 setIsTyping(false);
             }, 800);
