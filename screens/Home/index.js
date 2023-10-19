@@ -2,23 +2,25 @@ import { useState, useRef, useEffect } from "react";
 import { StyleSheet, View, FlatList, Keyboard, Text } from "react-native";
 
 import { COLORS } from "../../lib/theme";
-import { createURL } from "../../lib/createURL";
-import { spellChecker, removeNonLetters } from "../../lib/spellChecker";
+import { getRequest } from "../../lib/api";
+import { spellChecker } from "../../lib/spellChecker";
 
 import ImageCard from "./ImageCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import ErrorMessage from "../../components/ErrorMessage";
 import ToTopButton from "../../components/ToTopButton";
 import SearchInput from "./SearchInput";
-import ResetButton from "../../components/ResetButton";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function Home({ navigation }) {
     const [data, setData] = useState(null);
     const [searchInput, setSearchInput] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const [isTyping, setIsTyping] = useState(false);
     const [showResetButton, setShowResetButton] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
     const listRef = useRef(null);
 
@@ -44,20 +46,16 @@ export default function Home({ navigation }) {
         setIsTyping(true);
     };
 
-    // * The spellChecker function autocorrecting too quickly (sometimes after typing two chars it would autocorrect)
-    // * Adding an isTyping state and using the useEffect allowed for a better user experience
-
     useEffect(() => {
         if (searchInput === "") {
             setShowResetButton(false);
         }
         if (isTyping) {
             const timer = setTimeout(() => {
-                const filterWord = removeNonLetters(searchInput);
-                const correctedWord = spellChecker(filterWord);
-                setSearchInput(correctedWord);
+                const autoCorrectWord = spellChecker(searchInput);
+                setSearchInput(autoCorrectWord);
                 setIsTyping(false);
-            }, 800);
+            }, 500);
             return () => clearTimeout(timer);
         }
     }, [searchInput, isTyping]);
@@ -65,12 +63,12 @@ export default function Home({ navigation }) {
     const handleSubmit = async () => {
         try {
             setIsLoading(true);
-            const URL = createURL(searchInput);
-            const response = await fetch(URL);
-            const results = await response.json();
-            setData(results.hits);
+            if (!isTyping) {
+                const results = await getRequest(searchInput);
+                setData(results);
+            }
         } catch (error) {
-            setErrorMessage("An error occurred while making your search.");
+            setErrorMessage(error.message);
         } finally {
             setIsLoading(false);
             Keyboard.dismiss();

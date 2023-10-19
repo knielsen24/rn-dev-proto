@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet, Text } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS } from "../lib/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -26,9 +26,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 18,
         borderWidth: 1,
         borderColor: COLORS.violet400,
-    },
-    text: {
-        color: COLORS.gray600,
-        fontWeight: "bold",
     },
 });

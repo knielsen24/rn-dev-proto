@@ -89,19 +89,55 @@ The design of the folder structure is intended to be scalable, easy to navigate,
 * Lib folder
     * This folder is used for any helper functions or utilities used throughout the app. These file names are in camelCase since they do not return any JSX. For bigger apps, this folder could contain more folders depending on the use cases and complexity of the app. In this folder, I created a file called `createURL.js`, which dynamically creates the API URL to Pixabay with the search params. I also created a file called `theme.js` that contains any constants used throughout the app. In this case, I added a simple color palette.
 
+### UI Updates: React Hooks
+
+At this point of time, the component with all the react hooks are in the Home screen, since that is the only screen that needs the UI to update. The Home screen contains the search input, submit button, and the Flatlist gallery. 
+
+#### Text Input Field: useState
+Starting with the search input, there is a on change handler to to update and set state for the search query, and the value is connected to the React Native TextInput (passed down as props into the SearchInput component).  Additionally, that handler updates state to show a reset button that clears the search query, and sets a state to show the user is typing (I will expand on that on the submit).
+
+#### Triggering the spellChecker: useEffect Hook
+Getting the spell checker to function properly was a bit tricky, since the spell checker needed to be triggered before submitting the request.
+
+* Initially, I tried putting it in the on the change handler, but that was causing the spell checker to run after every character was typed.  Also, I was running into an issue where the spellChecker function was autocorrecting too quickly (sometimes after typing two letters it would autocorrect before I finished typing the word)
+* Applying the useEffect hook allowed me to trigger the spellChecker function after the user stopped typing using a setTimeout function a simply another useState function to determine if the user was typing, and it would be triggerd when the searchInput state was updated.  From there, the spellChecker function would run and update the searchInput state with the corrected word.  
+* I felt by adding the setTimeout function, it gave a much better user experience, since they were more likely to finish typing their word and they could see the word autocorrect in real time.
+
+#### Submit Button: useState
+* The submit button triggers the handle submit function.  Since the submit is making an api request, I used a async await function.  
+
+
+
+
+The Flatlist gallery is conditionally rendered based on the search results. If there are no results, an error message is displayed.
+
+
+
 ### Spell Checker
 Dictionary File: Found a wordlist json file (2,285 words) on GitHub. [Wordlist Link](https://github.com/bevacqua/correcthorse/blob/master/wordlist.json "Go to repo Link")
 
-Remove non-letter characters
+#### Remove non-letter characters
 * This was a simple regex expression that removed any non-letter characters from the string. I used the `replace()` method to replace any non-letter characters with an empty string.
 
-Mistyped vowels
-* My first attempt I was able to get the vowel replacer function to work under certain circumstances and would only change the first vowel if that was mistyped. It's a start but far from ideal since it does not work for all test cases.
+#### Mistyped vowels
+
+1st Attempt
+* I wanted to test probleming solving skills without "researching" for help, and I can say on my "first" attempt I was able to get the vowel replacer function to work under certain circumstances and would only change the first vowel if that was mistyped. It was finicking but it was a start, although far from ideal since it did not work for all test cases. After spending a few hours on it (easily the most time spent on one feature), I decided to step up my research game to find the solution in order to deliver the MVP on time.
+
+
+2nd Attempt
+* Using my best logical (google search) skills, I was able to find a much better solution on leetcode for a similiar problem.
+* From there I was able to modify the code to fit the needs of the prompt to properly auto-correct the for mistyped vowels. Additonally, since the solution was so elegantly simplified, I actually adjusted to logic so it was easier for me to read and understand.
+* It did force me to get a better understanding of sets and maps and the differences between them vs arrays and objects, so overall it was a great learning experience.
+
 * Logic
-    * Iterate through the string and check if the char is vowel
-    * If it is a vowel, change the vowel, and check for a match
-    * else find the next vowel and change it, and check for a match, and repeat until you get til the end of the string
-    * iterate to the nect vowel and repeat the process
+    * the wordlist.json file is imported using the `require()` method
+    * the wordlist is then converted into a set using the `new Set()` method (list of unique values)
+    * a Map is initialized using the `new Map()` method
+    * the query (word) gets the nonLetterCharacters removed and is converted to lowercase
+    * To add to the map, I used an iterator over the set to convert words to a masked word (ie. c_t) and then add the masked word as the key and the original word as the value (ie. {"c_t" => "cat"})
+    * From there there are two conditional statements to see if the initial word is in the Set, and if not, check if the masked word is in the Map. If the masked word is in the Map, then the original word is returned, otherwise the original word is returned.
+    * Lastly, if there is no match, the original word is returned.
 
 ## Checklist
 * [x] Research and select an image search API

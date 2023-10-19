@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { COLORS } from "../lib/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
