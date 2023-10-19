@@ -28,7 +28,7 @@ Due to the limited time for the assessment, I decided to focus on the following:
 1. Use familiar tools and technologies
 2. Quick research and selection of the Image API, dictionary file, and other technologies
 3. Delivering MVP with simple & elegant styling
-4. Add simple branding/styling, if time permits
+4. Optimize spellchecker to work for all edge cases
 
 ### Architecture
 Created the app using Expo and yarn
@@ -89,6 +89,20 @@ The design of the folder structure is intended to be scalable, easy to navigate,
 * Lib folder
     * This folder is used for any helper functions or utilities used throughout the app. These file names are in camelCase since they do not return any JSX. For bigger apps, this folder could contain more folders depending on the use cases and complexity of the app. In this folder, I created a file called `createURL.js`, which dynamically creates the API URL to Pixabay with the search params. I also created a file called `theme.js` that contains any constants used throughout the app. In this case, I added a simple color palette.
 
+### Spell Checker
+Dictionary File: Found a wordlist json file (2,285 words) on GitHub. [Wordlist Link](https://github.com/bevacqua/correcthorse/blob/master/wordlist.json "Go to repo Link")
+
+Remove non-letter characters
+* This was a simple regex expression that removed any non-letter characters from the string. I used the `replace()` method to replace any non-letter characters with an empty string.
+
+Mistyped vowels
+* My first attempt I was able to get the vowel replacer function to work under certain circumstances and would only change the first vowel if that was mistyped.  Far from ideal.
+* Logic
+    * Iterate through the string and check if the char is vowel
+    * If it is a vowel, change the vowel, and check for a match
+    * else find the next vowel and change it, and check for a match, and repeat until you get til the end of the string
+    * iterate to the nect vowel and repeat the process
+
 ## Checklist
 * [x] Research and select an image search API
 * [x] Test API with Postman
@@ -103,7 +117,7 @@ The design of the folder structure is intended to be scalable, easy to navigate,
 * [x] Responsive Gallery
 * [x] Error Handling
 * [x] Responsive Overlay
-* [] Research and select a 3rd-party dictionary file
+* [x] Research and select a 3rd-party dictionary file
 * [] Spelling Checker
     * [x] Remove non-letter characters
         * [x] nyl;on -> nylon

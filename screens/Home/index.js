@@ -35,7 +35,7 @@ export default function Home({ navigation }) {
         setIsTyping(true);
     };
 
-    // * I was having trouble with the spellChecker function autocorrecting too quickly (sometimes after typing to chars)
+    // * I was having trouble with the spellChecker function autocorrecting too quickly (sometimes after typing two chars it would autocorrect)
     // * Adding an isTyping state and using the useEffect allowed for a better user experience
 
     useEffect(() => {
