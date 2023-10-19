@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { StyleSheet, View, FlatList, Keyboard } from "react-native";
 
 import { COLORS } from "../../lib/theme";
@@ -14,6 +14,7 @@ import SearchInput from "./SearchInput";
 export default function Home({ navigation }) {
     const [data, setData] = useState(null);
     const [searchInput, setSearchInput] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
@@ -31,9 +32,22 @@ export default function Home({ navigation }) {
     const handleChange = (value) => {
         const filterWord = removeNonLetters(value);
         setSearchInput(filterWord);
-        const correctedWord = spellChecker(filterWord);
-        setSearchInput(correctedWord);
+        setIsTyping(true);
     };
+
+    // * I was having trouble with the spellChecker function autocorrecting too quickly (sometimes after typing to chars)
+    // * Adding an isTyping state and using the useEffect allowed for a better user experience
+
+    useEffect(() => {
+        if (isTyping) {
+            const timer = setTimeout(() => {
+                const correctedWord = spellChecker(searchInput);
+                setSearchInput(correctedWord);
+                setIsTyping(false);
+            }, 800);
+            return () => clearTimeout(timer);
+        }
+    }, [searchInput, isTyping]);
 
     const handleSubmit = async () => {
         try {

@@ -106,7 +106,14 @@ The design of the folder structure is intended to be scalable, easy to navigate,
 * [] Research and select a 3rd-party dictionary file
 * [] Spelling Checker
     * [x] Remove non-letter characters
+        * [x] nyl;on -> nylon
+        * [x] cak3e -> cake
     * [] Mistyped vowels
+        * [x] Working with one vowel words
+        * [x] ce3t -> cat
+        * [x] ceke -> cake
+        * [] Working with 2+ vowel words
+            * [x] Only working if first vowel is incorrect
 * [] Decisions & Assumptions
 
 
