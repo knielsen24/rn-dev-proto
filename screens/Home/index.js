@@ -1,10 +1,9 @@
 import { useState, useRef } from "react";
-import { StyleSheet, View, TextInput, FlatList, Keyboard } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet, View, FlatList, Keyboard } from "react-native";
 import { COLORS } from "../../lib/theme";
 import { createURL } from "../../lib/createURL";
+import { spellChecker } from "../../lib/spellChecker";
 
-import Button from "../../components/Button";
 import ImageCard from "./ImageCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -16,8 +15,9 @@ export default function Home({ navigation }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const listRef = useRef(null);
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
+    const listRef = useRef(null);
+
     const CONTENT_OFFSET_THRESHOLD = 400;
 
     const handleToTop = () => {
@@ -27,12 +27,15 @@ export default function Home({ navigation }) {
         });
     };
 
-    const handleChange = (value) => setSearchTerm(value);
+    const handleChange = (value) => {
+        const correctedWord = spellChecker(value);
+        setSearchTerm(correctedWord);
+    };
 
     const handleSubmit = async () => {
-        const URL = createURL(searchTerm);
         try {
             setIsLoading(true);
+            const URL = createURL(searchTerm);
             const response = await fetch(URL);
             const results = await response.json();
             setData(results.hits);

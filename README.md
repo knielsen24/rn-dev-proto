@@ -105,6 +105,8 @@ The design of the folder structure is intended to be scalable, easy to navigate,
 * [x] Responsive Overlay
 * [] Research and select a 3rd-party dictionary file
 * [] Spelling Checker
+    * [x] Remove non-letter characters
+    * [] Mistyped vowels
 * [] Decisions & Assumptions
 
 
