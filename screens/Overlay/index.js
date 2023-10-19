@@ -1,4 +1,5 @@
 import { View, Image, StyleSheet } from "react-native";
+import { COLORS } from "../../lib/theme";
 import CloseButton from "../../components/CloseButton";
 
 export default function Overlay({ navigation, route }) {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: COLORS.gray200,
     },
     image: {
         width: "100%",
