@@ -1,13 +1,16 @@
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../../lib/theme";
 
 import Button from "../../components/Button";
+import ResetButton from "../../components/ResetButton";
 
 export default function SearchInput({
     handleChange,
     handleSubmit,
     searchInput,
+    showResetButton,
+    handleReset,
 }) {
     return (
         <View style={styles.searchContainer}>
@@ -20,6 +23,11 @@ export default function SearchInput({
                     value={searchInput}
                     color={COLORS.gray600}
                 />
+                {showResetButton ? (
+                    <View style={styles.resetButtonContainer}>
+                        <ResetButton handleReset={handleReset} />
+                    </View>
+                ) : null}
             </View>
             <View style={styles.buttonContainer}>
                 <Button handlePress={handleSubmit} />
@@ -59,6 +67,10 @@ const styles = StyleSheet.create({
         height: 30,
         fontSize: 18,
         marginLeft: 8,
+    },
+    resetButtonContainer: {
+        position: "absolute",
+        right: 10,
     },
     buttonContainer: {
         alignItems: "center",

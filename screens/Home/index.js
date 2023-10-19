@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { StyleSheet, View, FlatList, Keyboard } from "react-native";
+import { StyleSheet, View, FlatList, Keyboard, Text } from "react-native";
 
 import { COLORS } from "../../lib/theme";
 import { createURL } from "../../lib/createURL";
@@ -10,11 +10,13 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import ErrorMessage from "../../components/ErrorMessage";
 import ToTopButton from "../../components/ToTopButton";
 import SearchInput from "./SearchInput";
+import ResetButton from "../../components/ResetButton";
 
 export default function Home({ navigation }) {
     const [data, setData] = useState(null);
     const [searchInput, setSearchInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const [showResetButton, setShowResetButton] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
@@ -29,15 +31,26 @@ export default function Home({ navigation }) {
         });
     };
 
+    const handleReset = () => {
+        setSearchInput("");
+        setShowResetButton(false);
+    };
+
     const handleChange = (value) => {
         setSearchInput(value);
+        if (searchInput !== "") {
+            setShowResetButton(true);
+        }
         setIsTyping(true);
     };
 
-    // * I was having trouble with the spellChecker function autocorrecting too quickly (sometimes after typing two chars it would autocorrect)
+    // * The spellChecker function autocorrecting too quickly (sometimes after typing two chars it would autocorrect)
     // * Adding an isTyping state and using the useEffect allowed for a better user experience
 
     useEffect(() => {
+        if (searchInput === "") {
+            setShowResetButton(false);
+        }
         if (isTyping) {
             const timer = setTimeout(() => {
                 const filterWord = removeNonLetters(searchInput);
@@ -66,13 +79,16 @@ export default function Home({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.outerContainer}>
-                <SearchInput
-                    handleChange={handleChange}
-                    handleSubmit={handleSubmit}
-                    searchInput={searchInput}
-                />
-            </View>
+            <SearchInput
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                searchInput={searchInput}
+                showResetButton={showResetButton}
+                handleReset={handleReset}
+            />
+            {/* <View style={styles.titleContainer}>
+                <Text>Pixabay Lite with autocorrect</Text>
+            </View> */}
             {errorMessage ? <ErrorMessage error={errorMessage} /> : null}
             {isLoading ? (
                 <LoadingSpinner />
@@ -113,5 +129,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.gray200,
+    },
+    titleContainer: {
+        marginTop: 5,
+        marginBottom: 5,
     },
 });
