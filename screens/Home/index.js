@@ -31,8 +31,8 @@ export default function Home({ navigation }) {
     const handleChange = (value) => {
         const filterWord = removeNonLetters(value);
         setSearchInput(filterWord);
-        // const correctedWord = spellChecker(filterWord);
-        // setSearchInput(correctedWord);
+        const correctedWord = spellChecker(filterWord);
+        setSearchInput(correctedWord);
     };
 
     const handleSubmit = async () => {
