@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { StyleSheet, View, FlatList, Keyboard } from "react-native";
+
 import { COLORS } from "../../lib/theme";
 import { createURL } from "../../lib/createURL";
 import { spellChecker } from "../../lib/spellChecker";
