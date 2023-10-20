@@ -89,7 +89,7 @@ The design of the folder structure is intended to be scalable, easy to navigate,
 * Lib folder
     * This folder is used for any helper functions or utilities used throughout the app. These file names are in camelCase since they do not return any JSX. For bigger apps, this folder could contain more folders depending on the use cases and complexity of the app. In this folder, I created a file called `createURL.js`, which dynamically creates the API URL to Pixabay with the search params. I also created a file called `theme.js` that contains any constants used throughout the app. In this case, I added a simple color palette.
 
-### UI Updates: React Hooks
+### UI Updates: React Hooks, React Native Components
 
 At this point of time, the component with all the react hooks are in the Home screen, since that is the only screen that needs the UI to update. The Home screen contains the search input, submit button, and the Flatlist gallery. 
 
@@ -105,11 +105,6 @@ Getting the spell checker to function properly was a bit tricky, since the spell
 
 #### Submit Button: useState
 * The submit button triggers the handle submit function.  Since the submit is making an api request, I used a async await function.  
-
-
-
-
-The Flatlist gallery is conditionally rendered based on the search results. If there are no results, an error message is displayed.
 
 
 

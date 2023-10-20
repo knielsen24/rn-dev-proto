@@ -2,24 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import { StyleSheet, View, FlatList, Keyboard, Text } from "react-native";
 
 import { COLORS } from "../../lib/theme";
-import { getRequest } from "../../lib/api";
 import { spellChecker } from "../../lib/spellChecker";
+import useGetQuery from "../../lib/useGetQuery";
 
 import ImageCard from "./ImageCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import ErrorMessage from "../../components/ErrorMessage";
 import ToTopButton from "../../components/ToTopButton";
 import SearchInput from "./SearchInput";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function Home({ navigation }) {
-    const [data, setData] = useState(null);
-    const [searchInput, setSearchInput] = useState("");
-    const [errorMessage, setErrorMessage] = useState(null);
+    const { data, isLoading, error, fetchData } = useGetQuery();
 
+    const [searchInput, setSearchInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [showResetButton, setShowResetButton] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
     const listRef = useRef(null);
@@ -60,17 +57,11 @@ export default function Home({ navigation }) {
         }
     }, [searchInput, isTyping]);
 
-    const handleSubmit = async () => {
-        try {
-            setIsLoading(true);
-            if (!isTyping) {
-                const results = await getRequest(searchInput);
-                setData(results);
-            }
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setIsLoading(false);
+    const handleSubmit = () => {
+        if (!isTyping) {
+            fetchData(searchInput);
+        }
+        if (!isLoading) {
             Keyboard.dismiss();
         }
     };
@@ -87,7 +78,7 @@ export default function Home({ navigation }) {
             {/* <View style={styles.titleContainer}>
                 <Text>Pixabay Lite with autocorrect</Text>
             </View> */}
-            {errorMessage ? <ErrorMessage error={errorMessage} /> : null}
+            {error ? <ErrorMessage error={error} /> : null}
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
