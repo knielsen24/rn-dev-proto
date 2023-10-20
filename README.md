@@ -68,7 +68,7 @@ Screen Layout (v1)
 
 ### File & Folder Structure
 
-All files that return JSX are in PascalCase, including all folder names that have a root index.js file (which returns JSX). All other files or folders are in camelCase, including files named index.js.
+All files that return JSX are in PascalCase in a jsx file type, including all folder names that have a root index.js file (which returns JSX). All other files or folders are in camelCase with a js file type, including files named index.jsx.
 
 * App.js
     * The main entry point for the app
@@ -87,7 +87,7 @@ The design of the folder structure is intended to be scalable, easy to navigate,
     * This is used for components that are screen-agnostic or, in other words, reusable with any screen. Some examples are reusable buttons, icons, or cards that would be in this folder, and dynamically adjusting them using props.
 
 * Lib folder
-    * This folder is used for any helper functions or utilities used throughout the app. These file names are in camelCase since they do not return any JSX. For bigger apps, this folder could contain more folders depending on the use cases and complexity of the app. In this folder, I created a file called `createURL.js`, which dynamically creates the API URL to Pixabay with the search params. I also created a file called `theme.js` that contains any constants used throughout the app. In this case, I added a simple color palette.
+    * This folder is used for any helper functions or utilities used throughout the app. These file names are in camelCase since they do not return any JSX. For bigger apps, this folder could contain more folders depending on the use cases and complexity of the app. In this folder, I created a file called `apiURL.js`, which dynamically creates the API URL to Pixabay with the search params. I also created a file called `theme.js` that contains any constants used throughout the app. In this case, I added a simple color palette.
 
 ### UI Updates: React Hooks, React Native Components
 
@@ -106,7 +106,16 @@ Getting the spell checker to function properly was a bit tricky, since the spell
 #### Submit Button: useState
 * The submit button triggers the handle submit function.  Since the submit is making an api request, I used a async await function.  
 
+#### Custom Hook: useGetQuery
+Created a custom hook called useGetQuery.js that handles the api request and returns the a trigger function, data (results), error, and loading state.  
 
+* This was a pretty significant refactor, for a couple reasons
+    1. The useGetQuery hook is reusable for any screen component. It is more scalable and with a few adjustments it could work for any api request.
+    2. Not quite as important, but it makes the Home screen more readable and easier to navigate through the code.
+* Inspiration for the refactor
+    * Although the orginal design did work, it lacked scability and was not resuable in other components.  
+    * One of the first couple React Native Youtube tutorials I followed showed how to create a custom hook.  Understanding that the prompt asked to NOT use a library or SDK that encapsulates interaction with the chosen API, I felt this was a good opportunity to show my ability refactor and optimize.  
+    * Experience with Redux Toolkit and RTK Query: I've enjoyed working this SDK with previous projects.  I will say it is rewarding knowing how to create a custom hook from scratch and not needing to install the packages and setting up the configuration.
 
 ### Spell Checker
 Dictionary File: Found a wordlist json file (2,285 words) on GitHub. [Wordlist Link](https://github.com/bevacqua/correcthorse/blob/master/wordlist.json "Go to repo Link")
@@ -149,16 +158,18 @@ Dictionary File: Found a wordlist json file (2,285 words) on GitHub. [Wordlist L
 * [x] Error Handling
 * [x] Responsive Overlay
 * [x] Research and select a 3rd-party dictionary file
-* [] Spelling Checker
+* [x] Spelling Checker
     * [x] Remove non-letter characters
         * [x] nyl;on -> nylon
         * [x] cak3e -> cake
-    * [] Mistyped vowels
+    * [x] Mistyped vowels
         * [x] Working with one vowel words
         * [x] ce3t -> cat
         * [x] ceke -> cake
-        * [] Working with 2+ vowel words
-            * [x] Only working if first vowel is incorrect
+        * [x] Working with 2+ vowel words
+            * [x] ceku -> cake
+            * [x] uctur -> actor
+            * [x] bioity -> beauty
 * [] Decisions & Assumptions
 
 
