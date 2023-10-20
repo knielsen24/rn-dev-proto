@@ -100,38 +100,39 @@ export default function Home({ navigation }) {
             ) : error ? (
                 <ErrorMessage error={error} />
             ) : (
-                <FlatList
-                    alwaysBounceVertical={false}
-                    data={data}
-                    initialNumToRender={5}
-                    renderItem={({ item }) => (
-                        <Card
-                            imageURL={item.webformatURL}
-                            views={item.views}
-                            likes={item.likes}
-                            downloads={item.downloads}
-                            navigation={navigation}
-                        />
-                    )}
-                    keyExtractor={(item) => item.id}
-                    ref={listRef}
-                    onScroll={(event) => {
-                        setContentVerticalOffset(
-                            event.nativeEvent.contentOffset.y
-                        );
-                    }}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
-                >
+                <>
+                    <FlatList
+                        alwaysBounceVertical={false}
+                        data={data}
+                        initialNumToRender={5}
+                        renderItem={({ item }) => (
+                            <Card
+                                imageURL={item.webformatURL}
+                                views={item.views}
+                                likes={item.likes}
+                                downloads={item.downloads}
+                                navigation={navigation}
+                            />
+                        )}
+                        keyExtractor={(item) => item.id}
+                        ref={listRef}
+                        onScroll={(event) => {
+                            setContentVerticalOffset(
+                                event.nativeEvent.contentOffset.y
+                            );
+                        }}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
+                            />
+                        }
+                    />
                     {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD &&
                     data ? (
                         <ToTopButton handlePress={handleToTop} />
                     ) : null}
-                </FlatList>
+                </>
             )}
         </View>
     );
