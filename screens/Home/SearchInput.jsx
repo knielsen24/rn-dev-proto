@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../../lib/theme";
@@ -12,16 +13,25 @@ export default function SearchInput({
     showResetButton,
     handleReset,
 }) {
+    const initialColor = COLORS.gray500;
+    const [iconColor, setIconColor] = useState(initialColor);
+
+    const handlePress = () => {
+        handleSubmit();
+        setIconColor(initialColor);
+    };
+
     return (
         <View style={styles.searchContainer}>
             <View style={styles.inputContainer}>
-                <MaterialIcons name="search" size={24} color={COLORS.gray400} />
+                <MaterialIcons name="search" size={24} color={iconColor} />
                 <TextInput
                     style={styles.textInput}
                     placeholder="Search for an Image"
                     onChangeText={handleChange}
                     value={searchInput}
                     color={COLORS.gray600}
+                    onPressIn={() => setIconColor(COLORS.amber)}
                 />
                 {showResetButton ? (
                     <View style={styles.resetButtonContainer}>
@@ -30,7 +40,7 @@ export default function SearchInput({
                 ) : null}
             </View>
             <View style={styles.buttonContainer}>
-                <Button handlePress={handleSubmit} />
+                <Button handlePress={handlePress} />
             </View>
         </View>
     );
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.gray100,
         borderRadius: 8,
         padding: 8,
-        paddingHorizontal: 10,
+        paddingLeft: 12,
         shadowColor: COLORS.violet600,
         shadowOffset: {
             width: 1,

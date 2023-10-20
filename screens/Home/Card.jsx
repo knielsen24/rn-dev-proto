@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../../lib/theme";
 
-export default function ImageCard({
+export default function Card({
     imageURL,
     views,
     likes,

@@ -1,27 +1,44 @@
-import { useState, useRef, useEffect } from "react";
-import { StyleSheet, View, FlatList, Keyboard, Text } from "react-native";
+import { useState, useRef, useEffect, useCallback } from "react";
+import {
+    StyleSheet,
+    View,
+    FlatList,
+    Keyboard,
+    Text,
+    RefreshControl,
+} from "react-native";
 
 import { COLORS } from "../../lib/theme";
 import { spellChecker } from "../../lib/spellChecker";
 import useGetQuery from "../../lib/useGetQuery";
 
-import ImageCard from "./ImageCard";
+import Card from "./Card";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import ErrorMessage from "../../components/ErrorMessage";
 import ToTopButton from "../../components/ToTopButton";
 import SearchInput from "./SearchInput";
 
 export default function Home({ navigation }) {
-    const { data, isLoading, error, fetchData } = useGetQuery();
+    const { data, isLoading, error, fetchData, refetch } = useGetQuery();
 
     const [searchInput, setSearchInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [showResetButton, setShowResetButton] = useState(false);
-
+    const [refreshing, setRefreshing] = useState(false);
     const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
     const listRef = useRef(null);
 
     const CONTENT_OFFSET_THRESHOLD = 400;
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        if (searchInput !== "") {
+            refetch();
+        }
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
     const handleToTop = () => {
         listRef.current.scrollToOffset({
@@ -78,37 +95,43 @@ export default function Home({ navigation }) {
             {/* <View style={styles.titleContainer}>
                 <Text>Pixabay Lite with autocorrect</Text>
             </View> */}
-            {error ? <ErrorMessage error={error} /> : null}
-            {isLoading ? (
+            {isLoading || refreshing ? (
                 <LoadingSpinner />
+            ) : error ? (
+                <ErrorMessage error={error} />
             ) : (
-                <>
-                    <FlatList
-                        alwaysBounceVertical={false}
-                        data={data}
-                        initialNumToRender={5}
-                        renderItem={({ item }) => (
-                            <ImageCard
-                                imageURL={item.webformatURL}
-                                views={item.views}
-                                likes={item.likes}
-                                downloads={item.downloads}
-                                navigation={navigation}
-                            />
-                        )}
-                        keyExtractor={(item) => item.id}
-                        ref={listRef}
-                        onScroll={(event) => {
-                            setContentVerticalOffset(
-                                event.nativeEvent.contentOffset.y
-                            );
-                        }}
-                    />
+                <FlatList
+                    alwaysBounceVertical={false}
+                    data={data}
+                    initialNumToRender={5}
+                    renderItem={({ item }) => (
+                        <Card
+                            imageURL={item.webformatURL}
+                            views={item.views}
+                            likes={item.likes}
+                            downloads={item.downloads}
+                            navigation={navigation}
+                        />
+                    )}
+                    keyExtractor={(item) => item.id}
+                    ref={listRef}
+                    onScroll={(event) => {
+                        setContentVerticalOffset(
+                            event.nativeEvent.contentOffset.y
+                        );
+                    }}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
                     {contentVerticalOffset > CONTENT_OFFSET_THRESHOLD &&
                     data ? (
                         <ToTopButton handlePress={handleToTop} />
                     ) : null}
-                </>
+                </FlatList>
             )}
         </View>
     );

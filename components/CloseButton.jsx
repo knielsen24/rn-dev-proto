@@ -8,7 +8,7 @@ export default function CloseButton({ handlePress }) {
             <MaterialCommunityIcons
                 name="close-circle-outline"
                 size={40}
-                color={COLORS.gray400}
+                color={COLORS.gray500}
             />
         </TouchableOpacity>
     );
