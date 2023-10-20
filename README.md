@@ -226,6 +226,9 @@ Logic
             -   [x] uctur -> actor
             -   [x] bioity -> beauty
 -   [x] Decisions & Assumptions
+-   [x] Testing
+    -   [x] Simulators: iOS & Android simulators
+    -   [x] Physical Devices: iOS & Android using the Expo Go
 
 ## Prompt
 
