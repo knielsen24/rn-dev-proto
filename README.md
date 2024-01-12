@@ -1,4 +1,4 @@
-# Appstem React Native Developer Prototype
+# Pixabay Lite React Native Developer Prototype
 
 Designed by Kevin Nielsen
 
